@@ -4,6 +4,8 @@
 #include <vector>
 #include "math/Vec3.h"
 #include "material/Material.h"
+#include "material/ContactMaterial.h"
+#include "constraints/Constraint.h"
 #include "objects/Body.h"
 #include "collision/Ray.h"
 #include "utils/EventTarget.h"
@@ -122,7 +124,7 @@ public:
      * @property constraints
      * @type {Array}
      */
-    std::vector<Constraint::Constraint*> constraints;
+    std::vector<Constraints::Constraint*> constraints;
 
     /**
      * @property narrowphase
@@ -241,14 +243,14 @@ public:
      * @method addConstraint
      * @param {Constraint} c
      */
-    void addConstraint(Constraint::Constraint* c);
+    void addConstraint(Constraints::Constraint* c);
 
     /**
      * Removes a constraint
      * @method removeConstraint
      * @param {Constraint} c
      */
-    void removeConstraint(Constraint::Constraint* c);
+    void removeConstraint(Constraints::Constraint* c);
 
     /**
      * Ray cast against all bodies. The provided callback will be executed for each hit with a RaycastResult as single argument.
