@@ -2,6 +2,8 @@
 #define RaycastResult_h
 
 #include "math/Vec3.h"
+#include "objects/Body.h"
+#include "shapes/Shape.h"
 
 namespace Cannon::Collision {
 
@@ -45,13 +47,13 @@ public:
      * The hit shape, or null.
      * @property {Shape} shape
      */
-    Shape shape = nullptr;
+    Shapes::Shape* shape = nullptr;
 
     /**
      * The hit body, or null.
      * @property {Body} body
      */
-    Body body = nullptr;
+    Objects::Body* body = nullptr;
 
     /**
      * The index of the hit triangle, if the hit shape was a trimesh.
@@ -98,8 +100,8 @@ public:
         Math::Vec3 rayToWorld,
         Math::Vec3 hitNormalWorld,
         Math::Vec3 hitPointWorld,
-        Shape shape,
-        Body body,
+        Shapes::Shape* shape,
+        Objects::Body* body,
         float distance
     );
 };

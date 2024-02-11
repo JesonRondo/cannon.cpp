@@ -4,7 +4,13 @@
 #include <vector>
 #include "math/Vec3.h"
 #include "math/Quaternion.h"
+#include "objects/Body.h"
+#include "shapes/Shape.h"
 #include "collision/RaycastResult.h"
+
+namespace Cannon::World {
+    class World;
+}
 
 namespace Cannon::Collision {
 
@@ -15,6 +21,15 @@ enum RayMode {
 };
 
 class AABB;
+
+struct RaycastOptions {
+    int collisionFilterMask = -1;
+    int collisionFilterGroup = -1;
+    bool skipBackfaces = false;
+    bool checkCollisionResponse = true;
+};
+
+typedef void (*RaycastResultCallback)(RaycastResult* result);
 
 class Ray {
 private:
@@ -91,11 +106,10 @@ public:
     bool hasHit = false;
 
     /**
-     * TODO
      * Current, user-provided result callback. Will be used if mode is Ray.ALL.
      * @property {Function} callback
      */
-    // this.callback = function(result){};
+    RaycastResultCallback* callback;
 
     /*
     * As per "Barycentric Technique" as named here http://www.blackpawn.com/texts/pointinpoly/default.html But without the division
@@ -124,7 +138,7 @@ public:
      * @param  {World} world
      * @return {Boolean} True if the ray hit anything, otherwise false.
      */
-    bool intersectWorld(World world);
+    bool intersectWorld(World::World* world);
 
     /**
      * Shoot a ray at a body, get back information about the hit.
@@ -133,14 +147,14 @@ public:
      * @param {Body} body
      * @param {RaycastResult} [result] Deprecated - set the result property of the Ray instead.
      */
-    void intersectBody(Body body, RaycastResult result);
+    void intersectBody(Objects::Body* body, RaycastResult result);
 
     /**
      * @method intersectBodies
      * @param {Array} bodies An array of Body objects.
      * @param {RaycastResult} [result] Deprecated
      */
-    void intersectBodies(Body* bodies, RaycastResult result);
+    void intersectBodies(std::vector<Objects::Body*> bodies, RaycastResult result);
 
     /**
      * @method intersectShape
@@ -150,7 +164,7 @@ public:
      * @param {Vec3} position
      * @param {Body} body
      */
-    void intersectShape(Shape shape, Math::Quaternion quat, Math::Vec3 position, Body body);
+    void intersectShape(Shapes::Shape* shape, Math::Quaternion quat, Math::Vec3 position, Objects::Body* body);
 
     /**
      * @method intersectBox
@@ -160,7 +174,7 @@ public:
      * @param  {Vec3} position
      * @param  {Body} body
      */
-    void intersectBox(Shape shape, Math::Quaternion quat, Math::Vec3 position, Body body, int reportedShape);
+    void intersectBox(Shapes::Shape* shape, Math::Quaternion quat, Math::Vec3 position, Objects::Body* body, int reportedShape);
     // Ray.prototype[Shape.types.BOX] = Ray.prototype.intersectBox;
 
     /**
@@ -171,7 +185,7 @@ public:
      * @param  {Vec3} position
      * @param  {Body} body
      */
-    void intersectPlane(Shape shape, Math::Quaternion quat, Math::Vec3 position, Body body, int reportedShape);
+    void intersectPlane(Shapes::Shape* shape, Math::Quaternion quat, Math::Vec3 position, Objects::Body* body, int reportedShape);
     // Ray.prototype[Shape.types.PLANE] = Ray.prototype.intersectPlane;
 
     /**
@@ -189,7 +203,7 @@ public:
      * @param  {Vec3} position
      * @param  {Body} body
      */
-    void intersectHeightfield(Shape shape, Math::Quaternion quat, Math::Vec3 position, Body body, int reportedShape);
+    void intersectHeightfield(Shapes::Shape* shape, Math::Quaternion quat, Math::Vec3 position, Objects::Body* body, int reportedShape);
     // Ray.prototype[Shape.types.HEIGHTFIELD] = Ray.prototype.intersectHeightfield;
 
     /**
@@ -200,7 +214,7 @@ public:
      * @param  {Vec3} position
      * @param  {Body} body
      */
-    void intersectSphere(Shape shape, Math::Quaternion quat, Math::Vec3 position, Body body, int reportedShape);
+    void intersectSphere(Shapes::Shape* shape, Math::Quaternion quat, Math::Vec3 position, Objects::Body* body, int reportedShape);
     // Ray.prototype[Shape.types.SPHERE] = Ray.prototype.intersectSphere;
 
     /**
@@ -214,12 +228,12 @@ public:
      * @param {array} [options.faceList]
      */
     void intersectConvex(
-        Shape shape,
+        Shapes::Shape* shape,
         Math::Quaternion quat,
         Math::Vec3 position,
-        Body body,
+        Objects::Body* body,
         int reportedShape,
-        std::vector<int> faceList,
+        std::vector<int> faceList
     );
     // Ray.prototype[Shape.types.CONVEXPOLYHEDRON] = Ray.prototype.intersectConvex;
 
@@ -235,12 +249,12 @@ public:
      * @todo Use Octree lookup
      */
     void intersectTrimesh(
-        Shape mesh,
+        Shapes::Shape* mesh,
         Math::Quaternion quat,
         Math::Vec3 position,
-        Body body,
+        Objects::Body* body,
         int reportedShape,
-        std::vector<int> faceList,
+        std::vector<int> faceList
     );
     // Ray.prototype[Shape.types.TRIMESH] = Ray.prototype.intersectTrimesh;
 
@@ -254,7 +268,7 @@ public:
      * @param  {Body} body
      * @return {boolean} True if the intersections should continue
      */
-    bool reportIntersection(Math::Vec3 normal, Math::Vec3 hitPointWorld, Shape shape, Body body, int hitFaceIndex);
+    bool reportIntersection(Math::Vec3 normal, Math::Vec3 hitPointWorld, Shapes::Shape* shape, Objects::Body* body, int hitFaceIndex);
 };
 
 } // end namespace Collision
