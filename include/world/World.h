@@ -8,7 +8,13 @@
 #include "constraints/Constraint.h"
 #include "objects/Body.h"
 #include "collision/Ray.h"
+#include "collision/ObjectCollisionMatrix.h"
+#include "collision/NaiveBroadphase.h"
 #include "utils/EventTarget.h"
+#include "utils/TupleDictionary.h"
+#include "solver/GSSolver.h"
+#include "equations/ContactEquation.h"
+#include "equations/FrictionEquation.h"
 
 namespace Cannon::World {
 
@@ -19,6 +25,14 @@ struct WorldProfile {
     int integrate;
     int narrowphase;
 };
+
+struct TriggerData {
+    Shapes::Shape* si;
+    Shapes::Shape* sj;
+};
+
+class System;
+class Narrowphase;
 
 class World : public Utils::EventTarget {
 private:
@@ -46,14 +60,14 @@ public:
      * @property contacts
      * @type {Array}
      */
-    this.contacts = [];
-    this.frictionEquations = [];
+    std::vector<Equations::ContactEquation*> contacts;
+    std::vector<Equations::FrictionEquation*> frictionEquations;
 
-    this.triggerDic = new TupleDictionary();
-    this.oldTriggerDic = new TupleDictionary();
+    Utils::TupleDictionary<TriggerData *> triggerDic;
+    Utils::TupleDictionary<TriggerData *> oldTriggerDic;
 
-    this.contactsDic = new TupleDictionary();
-    this.oldContactsDic = new TupleDictionary();
+    Utils::TupleDictionary<std::vector<Equations::ContactEquation *>> contactsDic;
+    Utils::TupleDictionary<std::vector<Equations::ContactEquation *>> oldContactsDic;
 
     /**
      * How often to normalize quaternions. Set to 0 for every step, 1 for every second etc.. A larger value increases performance. If bodies tend to explode, set to a smaller value (zero to be sure nothing can go wrong).
@@ -105,7 +119,7 @@ public:
      * @property broadphase
      * @type {Broadphase}
      */
-    this.broadphase = options.broadphase !== undefined ? options.broadphase : new NaiveBroadphase();
+    Collision::NaiveBroadphase* broadphase;
 
     /**
      * @property bodies
@@ -118,7 +132,7 @@ public:
      * @property solver
      * @type {Solver}
      */
-    this.solver = options.solver !== undefined ? options.solver : new GSSolver();
+    Solver::GSSolver* solver;
 
     /**
      * @property constraints
@@ -130,15 +144,15 @@ public:
      * @property narrowphase
      * @type {Narrowphase}
      */
-    this.narrowphase = new Narrowphase(this);
+    Narrowphase* narrowphase;
 
     /**
      * @property {ObjectCollisionMatrix} collisionMatrix
 	 * @type {ObjectCollisionMatrix}
 	 */
-    this.collisionMatrix = new ObjectCollisionMatrix();
+    Collision::ObjectCollisionMatrix collisionMatrix;
 
-    this.triggerMatrix = new ObjectCollisionMatrix();
+    Collision::ObjectCollisionMatrix triggerMatrix;
 
     /**
      * All added materials
@@ -157,7 +171,7 @@ public:
      * Used to look up a ContactMaterial given two instances of Material.
      * @property {TupleDictionary} contactMaterialTable
      */
-    this.contactMaterialTable = new TupleDictionary();
+    Utils::TupleDictionary<Material::ContactMaterial*> contactMaterialTable;
 
     Material::Material* defaultMaterial;
 
@@ -190,7 +204,7 @@ public:
      * @property subsystems
      * @type {Array}
      */
-    this.subsystems = [];
+    std::vector<System*> subsystems;
 
     /**
      * Dispatched after a body has been added to the world.

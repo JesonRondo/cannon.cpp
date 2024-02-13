@@ -72,6 +72,6 @@ public:
     EventTarget dispatchEvent(Event event);
 };
 
-} // namespace Cannon::Objects
+} // namespace Cannon::Utils
 
 #endif

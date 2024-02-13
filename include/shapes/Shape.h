@@ -95,7 +95,7 @@ public:
      * @method volume
      * @return {Number}
      */
-    virtual float volume() = 0;
+    virtual double volume() = 0;
 
     /**
      * Calculates the inertia in the local frame for this shape.
