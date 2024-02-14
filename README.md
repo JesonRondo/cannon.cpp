@@ -2,16 +2,18 @@
 
 ## Build
 
-```shell
-mkdir build
-cd build
+> Recommand to use cmake in Linux or Mac.
+> In Windows, use wsl with Linux subsystem avoid build problem.
 
-cmake .. -G "MinGW Makefiles" # MinGW for Windows
-cmake --build ./
+```shell
+cmake -S . -B build
+cmake --build build
 ```
 
 ## Run
 
+> With test case
+
 ```shell
-./cannon
+cd build && ctest
 ```

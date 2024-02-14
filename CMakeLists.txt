@@ -1,11 +1,7 @@
 # Set the minimum version of CMake that can be used
 # To find the cmake version run
 # $ cmake --version
-cmake_minimum_required(VERSION 3.5)
-
-# set compiler for Windows
-set(CMAKE_CXX_COMPILER "C:/MinGW/bin/g++.exe")
-set(CMAKE_C_COMPILER "C:/MinGW/bin/gcc.exe")
+cmake_minimum_required(VERSION 3.11)
 
 # Set the project name
 project (cannon)
@@ -19,3 +15,24 @@ project (cannon)
 
 # Add an executable
 add_executable(cannon source/cannon.cpp)
+
+# GoogleTest requires at least C++14
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+add_executable(cannon_test test/cannon_test.cc)
+target_link_libraries(cannon_test GTest::gtest_main)
+
+include(GoogleTest)
+gtest_discover_tests(cannon_test)
