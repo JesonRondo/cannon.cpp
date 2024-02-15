@@ -21,6 +21,7 @@ include_directories(${build_include_dirs})
 add_library(cannon
   source/math/Mat3.cpp
   source/math/Vec3.cpp
+  source/math/Quaternion.cpp
 )
 
 # GoogleTest requires at least C++14

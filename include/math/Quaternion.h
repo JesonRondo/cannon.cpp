@@ -1,6 +1,8 @@
 #ifndef Quaternion_h
 #define Quaternion_h
 
+#include <string>
+
 namespace Cannon::Math {
 
 class Vec3;
@@ -58,7 +60,7 @@ public:
      * @method toString
      * @return string
      */
-    char* toString();
+    std::string toString();
 
     /**
      * Convert to an Array
@@ -137,7 +139,7 @@ public:
      * @param {Vec3} target Optional
      * @return {Vec3}
      */
-    Vec3 vmult(Vec3 v, Vec3 target);
+    Vec3* vmult(Vec3* v, Vec3* target);
 
     /**
      * Copies value of source to this quaternion.
@@ -171,7 +173,8 @@ public:
      * @param {Number} z
      * @param {EulerOrder} order The order to apply angles: 'XYZ' or 'YXZ' or any other combination
      */
-    Quaternion setFromEuler(float x, float y, float z, EulerOrder order);
+    Quaternion* setFromEuler(float x, float y, float z);
+    Quaternion* setFromEuler(float x, float y, float z, EulerOrder order);
 
     /**
      * @method clone

@@ -2,6 +2,7 @@
 #define Vec3_h
 
 #include <string>
+#include <array>
 
 namespace Cannon::Math {
 
@@ -226,7 +227,7 @@ public:
      * @method toArray
      * @return Array
      */
-    float* toArray();
+    std::array<float, 3> toArray();
 
     /**
      * Copies value of source to this vector.
@@ -235,7 +236,6 @@ public:
      * @return {Vec3} this
      */
     Vec3 copy(Vec3 source);
-
 
     /**
      * Do a linear interpolation between two vectors
@@ -253,7 +253,7 @@ public:
      * @param {Number} precision
      * @return bool
      */
-    bool almostEquals(Vec3 v, float precision);
+    bool almostEquals(Vec3* v, float precision);
 
     /**
      * Check if a vector is almost zero

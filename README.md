@@ -23,7 +23,7 @@
  - [ ] Heightfield
  - [ ] HingeConstraint
  - [ ] LockConstraint
- - [ ] Mat3
+ - [x] Mat3
  - [ ] Material
  - [ ] NaiveBroadphase
  - [ ] ObjectCollisionMatrix

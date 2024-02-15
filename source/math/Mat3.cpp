@@ -1,4 +1,6 @@
 #include <vector>
+#include <string>
+#include <stdexcept>
 
 #include "math/Mat3.h"
 #include "math/Vec3.h"
@@ -7,57 +9,52 @@
 using namespace Cannon::Math;
 
 void Mat3::identity() {
-    auto e = elements;
-    e[0] = 1;
-    e[1] = 0;
-    e[2] = 0;
+    elements[0] = 1;
+    elements[1] = 0;
+    elements[2] = 0;
 
-    e[3] = 0;
-    e[4] = 1;
-    e[5] = 0;
+    elements[3] = 0;
+    elements[4] = 1;
+    elements[5] = 0;
 
-    e[6] = 0;
-    e[7] = 0;
-    e[8] = 1;
+    elements[6] = 0;
+    elements[7] = 0;
+    elements[8] = 1;
 };
 
 void Mat3::setZero() {
-    auto e = elements;
-    e[0] = 0;
-    e[1] = 0;
-    e[2] = 0;
-    e[3] = 0;
-    e[4] = 0;
-    e[5] = 0;
-    e[6] = 0;
-    e[7] = 0;
-    e[8] = 0;
+    elements[0] = 0;
+    elements[1] = 0;
+    elements[2] = 0;
+    elements[3] = 0;
+    elements[4] = 0;
+    elements[5] = 0;
+    elements[6] = 0;
+    elements[7] = 0;
+    elements[8] = 0;
 };
 
 void Mat3::setTrace(Vec3* vec3) {
-    auto e = elements;
-    e[0] = vec3->x;
-    e[4] = vec3->y;
-    e[8] = vec3->z;
+    elements[0] = vec3->x;
+    elements[4] = vec3->y;
+    elements[8] = vec3->z;
 };
 
 Vec3* Mat3::getTrace(Vec3* target) {
-    auto e = elements;
-    target->x = e[0];
-    target->y = e[4];
-    target->z = e[8];
+    target->x = elements[0];
+    target->y = elements[4];
+    target->z = elements[8];
 
     return target;
 };
 
 Vec3* Mat3::vmult(Vec3* v, Vec3* target) {
-    auto e = elements;
     auto x = v->x;
     auto y = v->y;
     auto z = v->z;
-    target->x = e[0]*x + e[1]*y + e[2]*z;
-    target->y = e[3]*x + e[4]*y + e[5]*z;
-    target->z = e[6]*x + e[7]*y + e[8]*z;
+    target->x = elements[0] * x + elements[1] * y + elements[2] * z;
+    target->y = elements[3] * x + elements[4] * y + elements[5] * z;
+    target->z = elements[6] * x + elements[7] * y + elements[8] * z;
 
     return target;
 };
@@ -90,68 +87,68 @@ Mat3* Mat3::scale(Vec3* v, Mat3* target) {
     return target;
 };
 
-// Vec3* Mat3::solve(Vec3* b, Vec3* target) {
-//     // Construct equations
-//     int nr = 3; // num rows
-//     int nc = 4; // num cols
-//     std::vector<float> eqns;
+Vec3* Mat3::solve(Vec3* b, Vec3* target) {
+    // Construct equations
+    int nr = 3; // num rows
+    int nc = 4; // num cols
+    std::vector<float> eqns;
 
-//     for (int i = 0; i < nr * nc; i++) {
-//         eqns.push_back(0);
-//     }
+    for (int i = 0; i < nr * nc; i++) {
+        eqns.push_back(0);
+    }
 
-//     for (int i = 0; i < 3; i++) {
-//         for (int j = 0; j < 3; j++) {
-//             eqns[i + nc * j] = this->e(j, i);
-//         }
-//     }
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            eqns[i + nc * j] = this->e(j, i);
+        }
+    }
 
-//     eqns[3 + 4 * 0] = b->x;
-//     eqns[3 + 4 * 1] = b->y;
-//     eqns[3 + 4 * 2] = b->z;
+    eqns[3 + 4 * 0] = b->x;
+    eqns[3 + 4 * 1] = b->y;
+    eqns[3 + 4 * 2] = b->z;
 
-//     // Compute right upper triangular version of the matrix - Gauss elimination
-//     int n = 3, k = n, np;
-//     int kp = 4; // num rows
-//     int p;
-//     do {
-//         int i = k - n;
-//         if (eqns[i + nc * i] == 0) {
-//             // the pivot is null, swap lines
-//             for (int j = i + 1; j < k; j++) {
-//                 if (eqns[i + nc * j] != 0) {
-//                     np = kp;
-//                     do { // do ligne( i ) = ligne( i ) + ligne( k )
-//                         p = kp - np;
-//                         eqns[p + nc * i] += eqns[p + nc * j];
-//                     } while (--np);
-//                     break;
-//                 }
-//             }
-//         }
-//         if (eqns[i + nc * i] != 0) {
-//             for (int j = i + 1; j < k; j++) {
-//                 float multiplier = eqns[i + nc * j] / eqns[i + nc * i];
-//                 np = kp;
-//                 do {  // do ligne( k ) = ligne( k ) - multiplier * ligne( i )
-//                     p = kp - np;
-//                     eqns[p + nc * j] = p <= i ? 0 : eqns[p + nc * j] - eqns[p + nc * i] * multiplier;
-//                 } while (--np);
-//             }
-//         }
-//     } while (--n);
+    // Compute right upper triangular version of the matrix - Gauss elimination
+    int n = 3, k = n, np;
+    int kp = 4; // num rows
+    int p;
+    do {
+        int i = k - n;
+        if (eqns[i + nc * i] == 0) {
+            // the pivot is null, swap lines
+            for (int j = i + 1; j < k; j++) {
+                if (eqns[i + nc * j] != 0) {
+                    np = kp;
+                    do { // do ligne( i ) = ligne( i ) + ligne( k )
+                        p = kp - np;
+                        eqns[p + nc * i] += eqns[p + nc * j];
+                    } while (--np);
+                    break;
+                }
+            }
+        }
+        if (eqns[i + nc * i] != 0) {
+            for (int j = i + 1; j < k; j++) {
+                float multiplier = eqns[i + nc * j] / eqns[i + nc * i];
+                np = kp;
+                do {  // do ligne( k ) = ligne( k ) - multiplier * ligne( i )
+                    p = kp - np;
+                    eqns[p + nc * j] = p <= i ? 0 : eqns[p + nc * j] - eqns[p + nc * i] * multiplier;
+                } while (--np);
+            }
+        }
+    } while (--n);
 
-//     if (eqns[2 * nc + 2] == 0 || eqns[1 * nc + 1] == 0 || eqns[0 * nc + 0] == 0) {
-//         throw "Could not solve equation! Got x=[" + target->toString() + "], b=[" + b->toString() + "], A=[" + this->toString() + "]";
-//     }
+    if (eqns[2 * nc + 2] == 0 || eqns[1 * nc + 1] == 0 || eqns[0 * nc + 0] == 0) {
+        throw std::runtime_error("Could not solve equation! Got x=[" + target->toString() + "], b=[" + b->toString() + "], A=[" + this->toString() + "]");
+    }
 
-//     // Get the solution
-//     target->z = eqns[2 * nc + 3] / eqns[2 * nc + 2];
-//     target->y = (eqns[1 * nc + 3] - eqns[1 * nc + 2] * target->z) / eqns[1 * nc + 1];
-//     target->x = (eqns[0 * nc + 3] - eqns[0 * nc + 2] * target->z - eqns[0 * nc + 1] * target->y) / eqns[0 * nc + 0];
+    // Get the solution
+    target->z = eqns[2 * nc + 3] / eqns[2 * nc + 2];
+    target->y = (eqns[1 * nc + 3] - eqns[1 * nc + 2] * target->z) / eqns[1 * nc + 1];
+    target->x = (eqns[0 * nc + 3] - eqns[0 * nc + 2] * target->z - eqns[0 * nc + 1] * target->y) / eqns[0 * nc + 0];
 
-//     return target;
-// };
+    return target;
+};
 
 float Mat3::e(int row, int column) {
     return elements[column + 3 * row];
@@ -224,7 +221,7 @@ Mat3* Mat3::reverse(Mat3* target) {
         if (eqns[i + nc * i] != 0) {
             for (int j = i + 1; j < k; j++) {
                 if (eqns[i + nc * i] == 0) {
-                    throw "Could not reverse! A=[" + this->toString() + "]";
+                    throw std::runtime_error("Could not reverse! A=[" + this->toString() + "]");
                 }
                 float multiplier = eqns[i + nc * j] / eqns[i + nc * i];
                 np = kp;
@@ -242,7 +239,7 @@ Mat3* Mat3::reverse(Mat3* target) {
         int j = i-1;
         do {
             if (eqns[i + nc * i] == 0) {
-                throw "Could not reverse! A=[" + this->toString() + "]";
+                throw std::runtime_error("Could not reverse! A=[" + this->toString() + "]");
             }
 
             float multiplier = eqns[i + nc * j] / eqns[i + nc * i];
@@ -258,7 +255,7 @@ Mat3* Mat3::reverse(Mat3* target) {
     i = 2;
     do {
         if (eqns[i + nc * i] == 0) {
-            throw "Could not reverse! A=[" + this->toString() + "]";
+            throw std::runtime_error("Could not reverse! A=[" + this->toString() + "]");
         }
 
         float multiplier = 1 / eqns[i + nc * i];
@@ -287,30 +284,26 @@ Mat3* Mat3::setRotationFromQuaternion(Quaternion* q) {
         xx = x * x2, xy = x * y2, xz = x * z2,
         yy = y * y2, yz = y * z2, zz = z * z2,
         wx = w * x2, wy = w * y2, wz = w * z2;
-    auto e = elements;
 
-    e[3 * 0 + 0] = 1 - (yy + zz);
-    e[3 * 0 + 1] = xy - wz;
-    e[3 * 0 + 2] = xz + wy;
+    elements[3 * 0 + 0] = 1 - (yy + zz);
+    elements[3 * 0 + 1] = xy - wz;
+    elements[3 * 0 + 2] = xz + wy;
 
-    e[3 * 1 + 0] = xy + wz;
-    e[3 * 1 + 1] = 1 - (xx + zz);
-    e[3 * 1 + 2] = yz - wx;
+    elements[3 * 1 + 0] = xy + wz;
+    elements[3 * 1 + 1] = 1 - (xx + zz);
+    elements[3 * 1 + 2] = yz - wx;
 
-    e[3 * 2 + 0] = xz - wy;
-    e[3 * 2 + 1] = yz + wx;
-    e[3 * 2 + 2] = 1 - (xx + yy);
+    elements[3 * 2 + 0] = xz - wy;
+    elements[3 * 2 + 1] = yz + wx;
+    elements[3 * 2 + 2] = 1 - (xx + yy);
 
     return this;
 };
 
 Mat3* Mat3::transpose(Mat3* target) {
-    auto Mt = target->elements;
-    auto M = elements;
-
     for (auto i = 0; i != 3; i++) {
         for (auto j = 0; j != 3; j++) {
-            Mt[3 * i + j] = M[3 * j + i];
+            target->elements[3 * i + j] = elements[3 * j + i];
         }
     }
 
