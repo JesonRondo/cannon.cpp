@@ -1,7 +1,7 @@
 # Set the minimum version of CMake that can be used
 # To find the cmake version run
 # $ cmake --version
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.13)
 
 # Set the project name
 project (cannon)
@@ -12,9 +12,16 @@ project (cannon)
 # automatically. Keep that in mind when changing files, or explicitly mention them here.
 # file(GLOB_RECURSE headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
 # file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp")
+set(build_include_dirs
+  "${CMAKE_CURRENT_SOURCE_DIR}/include"
+  "${CMAKE_CURRENT_SOURCE_DIR}")
+include_directories(${build_include_dirs})
 
-# Add an executable
-add_executable(cannon source/cannon.cpp)
+# My library, add anthor file modify here
+add_library(cannon
+  source/math/Mat3.cpp
+  source/math/Vec3.cpp
+)
 
 # GoogleTest requires at least C++14
 set(CMAKE_CXX_STANDARD 14)
@@ -31,8 +38,12 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-add_executable(cannon_test test/cannon_test.cc)
-target_link_libraries(cannon_test GTest::gtest_main)
+# unit test
+add_executable(cannon_test
+  test/vec3_test.cc
+  test/mat3_test.cc
+)
+target_link_libraries(cannon_test GTest::gtest_main cannon)
 
 include(GoogleTest)
 gtest_discover_tests(cannon_test)

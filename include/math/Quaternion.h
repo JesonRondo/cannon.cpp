@@ -16,19 +16,20 @@ enum EulerOrder {
 
 class Quaternion {
 private:
-    float x_;
-    float y_;
-    float z_;
-    float w_;
 
 public:
+    float x;
+    float y;
+    float z;
+    float w;
+
     /**
      * A Quaternion describes a rotation in 3D space. The Quaternion is mathematically defined as Q = x*i + y*j + z*k + w, where (i,j,k) are imaginary basis vectors. (x,y,z) can be seen as a vector related to the axis of rotation, while the real multiplier, w, is related to the amount of rotation.
      * @class Quaternion
      * @constructor
      * @see http://en.wikipedia.org/wiki/Quaternion
      */
-    Quaternion(){ x_ = 0.0; y_ = 0.0; z_ = 0.0; w_ = 0.0; };
+    Quaternion(){ x = 0.0; y = 0.0; z = 0.0; w = 0.0; };
 
     /**
      * A Quaternion describes a rotation in 3D space. The Quaternion is mathematically defined as Q = x*i + y*j + z*k + w, where (i,j,k) are imaginary basis vectors. (x,y,z) can be seen as a vector related to the axis of rotation, while the real multiplier, w, is related to the amount of rotation.
@@ -40,7 +41,7 @@ public:
      * @param {Number} w Multiplier of the real part.
      * @see http://en.wikipedia.org/wiki/Quaternion
      */
-    Quaternion(float x, float y, float z, float w): x_(x), y_(y), z_(z), w_(w) {};
+    Quaternion(float x, float y, float z, float w): x(x), y(y), z(z), w(w) {};
 
     /**
      * Set the value of the quaternion.

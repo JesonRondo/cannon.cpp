@@ -1,15 +1,14 @@
 #ifndef Vec3_h
 #define Vec3_h
 
+#include <string>
+
 namespace Cannon::Math {
 
 class Mat3;
 
 class Vec3 {
 private:
-    float x_;
-    float y_;
-    float z_;
 
 public:
     /**
@@ -35,13 +34,17 @@ public:
      * @property {Vec3} UNIT_Z
      */
     static const Vec3 UNIT_Z;
+    
+    float x;
+    float y;
+    float z;
 
     /**
      * 3-dimensional vector
      * @class Vec3
      * @constructor
      */
-    Vec3(){ x_ = 0.0; y_ = 0.0; z_ = 0.0; };
+    Vec3(){ x = 0.0; y = 0.0; z = 0.0; };
 
     /**
      * 3-dimensional vector
@@ -55,7 +58,7 @@ public:
      *     var v = new Vec3(1, 2, 3);
      *     console.log('x=' + v.x); // x=1
      */
-    Vec3(float x, float y, float z): x_(x), y_(y), z_(z) {};
+    Vec3(float x, float y, float z): x(x), y(y), z(z) {};
 
     /**
      * Vector cross product
@@ -216,7 +219,7 @@ public:
      * @method toString
      * @return string
      */
-    char* toString();
+    std::string toString();
 
     /**
      * Converts to an array
