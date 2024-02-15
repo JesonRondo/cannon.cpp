@@ -47,7 +47,7 @@
  - [ ] Spring
  - [ ] Transform
  - [ ] Trimesh
- - [ ] Vec3
+ - [x] Vec3
  - [ ] Vec3Pool
  - [ ] World
  - [ ] Octree

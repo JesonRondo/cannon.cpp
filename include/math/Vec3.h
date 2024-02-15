@@ -68,7 +68,7 @@ public:
      * @param {Vec3} target Optional. Target to save in.
      * @return {Vec3}
      */
-    Vec3 cross(Vec3 v, Vec3 target);
+    Vec3* cross(Vec3* v, Vec3* target);
 
     /**
      * Set the vectors' 3 elements
@@ -78,13 +78,13 @@ public:
      * @param {Number} z
      * @return Vec3
      */
-    Vec3 set(float x, float y, float z);
+    Vec3* set(float x, float y, float z);
 
     /**
      * Set all components of the vector to zero.
      * @method setZero
      */
-    void setZero();
+    Vec3* setZero();
 
     /**
      * Vector addition
@@ -93,7 +93,7 @@ public:
      * @param {Vec3} target Optional.
      * @return {Vec3}
      */
-    Vec3 vadd(Vec3 v, Vec3 target);
+    Vec3* vadd(Vec3* v, Vec3* target);
 
     /**
      * Vector subtraction
@@ -102,7 +102,7 @@ public:
      * @param {Vec3} target Optional. Target to save in.
      * @return {Vec3}
      */
-    Vec3 vsub(Vec3 v, Vec3 target);
+    Vec3* vsub(Vec3* v, Vec3* target);
 
     /**
      * Get the cross product matrix a_cross from a vector, such that a x b = a_cross * b = c
@@ -125,7 +125,7 @@ public:
      * @param {Vec3} target Optional target to save in
      * @return {Vec3} Returns the unit vector
      */
-    Vec3 unit(Vec3 target);
+    Vec3* unit(Vec3* target);
 
     /**
      * Get the length of the vector
@@ -147,7 +147,7 @@ public:
      * @param  {Vec3} p
      * @return {Number}
      */
-    float distanceTo(Vec3 p);
+    float distanceTo(Vec3* p);
 
     /**
      * Get squared distance from this point to another point
@@ -155,16 +155,16 @@ public:
      * @param  {Vec3} p
      * @return {Number}
      */
-    float distanceSquared(Vec3 p);
+    float distanceSquared(Vec3* p);
 
     /**
      * Multiply the vector with an other vector, component-wise.
      * @method mult
-     * @param {Number} vector
+     * @param {Vec3} vector
      * @param {Vec3} target The vector to save the result in.
      * @return {Vec3}
      */
-    Vec3 vmul(float vector, Vec3 target);
+    Vec3* vmul(Vec3* vector, Vec3* target);
 
     /**
      * Multiply the vector with a scalar.
@@ -173,7 +173,7 @@ public:
      * @param {Vec3} target
      * @return {Vec3}
      */
-    Vec3 scale(float scalar, Vec3 target);
+    Vec3* scale(float scalar, Vec3* target);
 
     /**
      * Scale a vector and add it to this vector. Save the result in "target". (target = this + vector * scalar)
@@ -183,7 +183,7 @@ public:
      * @param {Vec3} target The vector to save the result in.
      * @return {Vec3}
      */
-    Vec3 addScaledVector(float scalar, Vec3 vector, Vec3 target);
+    Vec3* addScaledVector(float scalar, Vec3* vector, Vec3* target);
 
     /**
      * Calculate dot product
@@ -191,7 +191,7 @@ public:
      * @param {Vec3} v
      * @return {Number}
      */
-    float dot(Vec3 v);
+    float dot(Vec3* v);
 
     /**
      * @method isZero
@@ -205,7 +205,7 @@ public:
      * @param {Vec3} target Optional target to save in
      * @return {Vec3}
      */
-    Vec3 negate(Vec3 target);
+    Vec3* negate(Vec3* target);
 
     /**
      * Compute two artificial tangents to the vector
@@ -213,7 +213,7 @@ public:
      * @param {Vec3} t1 Vector object to save the first tangent in
      * @param {Vec3} t2 Vector object to save the second tangent in
      */
-    void tangents(Vec3 t1, Vec3 t2);
+    void tangents(Vec3* t1, Vec3* t2);
 
     /**
      * Converts to a more readable format
@@ -235,7 +235,7 @@ public:
      * @param {Vec3} source
      * @return {Vec3} this
      */
-    Vec3 copy(Vec3 source);
+    Vec3* copy(Vec3* source);
 
     /**
      * Do a linear interpolation between two vectors
@@ -244,7 +244,7 @@ public:
      * @param {Number} t A number between 0 and 1. 0 will make this function return u, and 1 will make it return v. Numbers in between will generate a vector in between them.
      * @param {Vec3} target
      */
-    void lerp(Vec3 v, float t, Vec3 target);
+    Vec3* lerp(Vec3* v, float t, Vec3* target);
 
     /**
      * Check if a vector equals is almost equal to another one.
@@ -269,7 +269,7 @@ public:
      * @param  {Number}  precision Set to zero for exact comparisons
      * @return {Boolean}
      */
-    bool isAntiparallelTo(Vec3 v, float precision);
+    bool isAntiparallelTo(Vec3* v, float precision);
 
     /**
      * Clone the vector
