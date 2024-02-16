@@ -21,18 +21,18 @@ public:
      * @param {Number} radius The radius of the sphere, a non-negative number.
      * @author schteppe / http://github.com/schteppe
      */
-    Sphere() { radius = 1.0; };
+    Sphere();
     Sphere(float radius);
 
-    Math::Vec3* calculateLocalInertia(float mass, Math::Vec3* target);
+    void calculateLocalInertia(float mass, Math::Vec3* target);
 
     double volume();
 
     void updateBoundingSphereRadius();
 
     void calculateWorldAABB(
-        Math::Vec3 pos,
-        Math::Quaternion quat,
+        Math::Vec3* pos,
+        Math::Quaternion* quat,
         Math::Vec3* min,
         Math::Vec3* max);
 };

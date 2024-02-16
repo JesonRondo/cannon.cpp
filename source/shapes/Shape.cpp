@@ -1,5 +1,7 @@
 #include "shapes/Shape.h"
 
-using namespace Cannon;
+using namespace Cannon::Shapes;
 
-int Shapes::Shape::idCounter = 0;
+int Shape::idCounter = 0;
+
+Shape::Shape(ShapeTypes type) : type(type), id(idCounter++) {}

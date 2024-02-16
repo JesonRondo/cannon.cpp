@@ -21,9 +21,8 @@ public:
      * @method calculateLocalInertia
      * @param  {Number} mass
      * @param  {Vec3} target
-     * @return {Vec3}
      */
-    Math::Vec3* calculateLocalInertia(float mass, Math::Vec3* target);
+    void calculateLocalInertia(float mass, Math::Vec3* target);
 
     double volume();
 

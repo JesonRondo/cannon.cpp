@@ -25,7 +25,7 @@ public:
 
     void computeWorldNormal(Math::Quaternion quat);
 
-    Math::Vec3* calculateLocalInertia(float mass, Math::Vec3* target);
+    void calculateLocalInertia(float mass, Math::Vec3* target);
 
     double volume();
 

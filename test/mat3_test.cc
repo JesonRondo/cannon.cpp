@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <stdexcept>
+#include <cmath>
 
 #include "math/Mat3.h"
 #include "math/Vec3.h"
@@ -181,7 +182,7 @@ TEST(Mat3, Reverse) {
     bool success = true;
     for (int c = 0 ; c < 3 ; c++)
         for (int r = 0; r < 3; r++)
-            success = success && (std::abs(m3->e(r, c) - (c == r ? 1 : 0)) < 0.00001);
+            success = success && (std::abs(m3->e(r, c) - (c == r ? 1.0f : 0.0f)) < 0.00001);
 
     // inversing
     EXPECT_TRUE(success);

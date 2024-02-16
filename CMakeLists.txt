@@ -22,6 +22,9 @@ add_library(cannon
   source/math/Mat3.cpp
   source/math/Vec3.cpp
   source/math/Quaternion.cpp
+  source/utils/EventTarget.cpp
+  source/shapes/Shape.cpp
+  source/shapes/Sphere.cpp
 )
 
 # GoogleTest requires at least C++14
@@ -44,6 +47,7 @@ add_executable(cannon_test
   test/vec3_test.cc
   test/mat3_test.cc
   test/quaternion_test.cc
+  test/sphere_test.cc
 )
 target_link_libraries(cannon_test GTest::gtest_main cannon)
 

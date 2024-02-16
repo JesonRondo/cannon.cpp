@@ -208,7 +208,7 @@ public:
      * @param  {Vec3} target
      * @return {Vec3} The "target" vector object
      */
-    Math::Vec3* calculateLocalInertia(float mass, Math::Vec3* target);
+    void calculateLocalInertia(float mass, Math::Vec3* target);
 
     /**
      * Compute the local AABB for the trimesh

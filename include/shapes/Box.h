@@ -2,7 +2,9 @@
 #define Box_h
 
 #include "shapes/Shape.h"
+#include "shapes/ConvexPolyhedron.h"
 #include "math/Quaternion.h"
+#include "math/Vec3.h"
 
 namespace Cannon::Shapes {
 
@@ -43,9 +45,8 @@ public:
      * @method calculateLocalInertia
      * @param  {Number} mass
      * @param  {Vec3} target
-     * @return {Vec3}
      */
-    Math::Vec3* calculateLocalInertia(float mass, Math::Vec3* target);
+    void calculateLocalInertia(float mass, Math::Vec3* target);
 
     void calculateInertia(Math::Vec3* halfExtents, float mass, Math::Vec3* target);
 

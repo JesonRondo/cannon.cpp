@@ -49,40 +49,40 @@ public:
      * The local bounding sphere radius of this shape.
      * @property {Number} boundingSphereRadius
      */
-    float boundingSphereRadius;
+    float boundingSphereRadius = 0;
 
     /**
      * Whether to produce contact forces when in contact with other bodies. Note that contacts will be generated, but they will be disabled.
      * @property {boolean} collisionResponse
      */
-    bool collisionResponse;
+    bool collisionResponse = true;
 
     /**
      * @property {Number} collisionFilterGroup
      */
-    int collisionFilterGroup;
+    int collisionFilterGroup = 1;
 
     /**
      * @property {Number} collisionFilterMask
      */
-    int collisionFilterMask;
+    int collisionFilterMask = -1;
 
     /**
      * @property {Material} material
      */
-    Material::Material* material;
+    Material::Material* material = nullptr;
 
     /**
      * @property {Body} body
      */
-    Objects::Body* body;
+    Objects::Body* body = nullptr;
 
     /**
      * Base class for shapes
      * @class Shape
      * @constructor
      */
-    Shape();
+    Shape(ShapeTypes type);
 
     /**
      * Computes the bounding sphere radius. The result is stored in the property .boundingSphereRadius
@@ -104,7 +104,7 @@ public:
      * @param {Vec3} target
      * @see http://en.wikipedia.org/wiki/List_of_moments_of_inertia
      */
-    virtual void calculateLocalInertia(float mass, Math::Vec3 target) = 0;
+    virtual void calculateLocalInertia(float mass, Math::Vec3* target) = 0;
 };
 
 }

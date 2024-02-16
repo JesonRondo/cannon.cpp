@@ -7,6 +7,8 @@
 
 namespace Cannon::Utils {
 
+class EventTarget;
+
 struct Event {
     std::string type;
     EventTarget* target;

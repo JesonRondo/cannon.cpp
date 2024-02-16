@@ -40,9 +40,9 @@
  - [ ] RotationalMotorEquation
  - [ ] SAPBroadphase
  - [ ] SPHSystem
- - [ ] Shape
+ - [x] Shape
  - [ ] Solver
- - [ ] Sphere
+ - [x] Sphere
  - [ ] SplitSolver
  - [ ] Spring
  - [ ] Transform
