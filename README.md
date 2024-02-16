@@ -1,5 +1,7 @@
 # Cannon Work in Progress
 
+![Package Size](https://img.shields.io/badge/dynamic/json?label=Package%20Size&query=$.lib_size&url=https://raw.githubusercontent.com/JesonRondo/cannon.cpp/develop/badge.json)
+
 ## Progress
 
  - [ ] AABB
