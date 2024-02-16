@@ -16,7 +16,7 @@
  - [ ] Cylinder
  - [ ] DistanceConstraint
  - [ ] Equation
- - [ ] EventTarget
+ - [x] EventTarget
  - [ ] FrictionEquation
  - [ ] GSSolver
  - [ ] GridBroadphase
@@ -68,4 +68,6 @@ cmake --build build
 
 ```shell
 cd build && ctest
+#or
+./build/cannon_test
 ```

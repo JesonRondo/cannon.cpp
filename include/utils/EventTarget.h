@@ -2,6 +2,8 @@
 #define Body_h
 
 #include <map>
+#include <string>
+#include <vector>
 
 namespace Cannon::Utils {
 
@@ -17,7 +19,7 @@ typedef void (*EventListener)(Event event);
 
 class EventTarget {
 private:
-    std::map<std::string, EventListener> listeners_;
+    std::map<std::string, std::vector<EventListener>> listeners_;
 
 public:
     /**
@@ -34,7 +36,7 @@ public:
      * @param  {Function} listener
      * @return {EventTarget} The self object, for chainability.
      */
-    EventTarget addEventListener(std::string type, EventListener listener);
+    EventTarget* addEventListener(std::string type, EventListener listener);
 
     /**
      * Check if an event listener is added
@@ -60,7 +62,7 @@ public:
      * @param  {Function} listener
      * @return {EventTarget} The self object, for chainability.
      */
-    EventTarget removeEventListener(std::string type, EventListener listener);
+    EventTarget* removeEventListener(std::string type, EventListener listener);
 
     /**
      * Emit an event.
@@ -69,7 +71,7 @@ public:
      * @param  {String} event.type
      * @return {EventTarget} The self object, for chainability.
      */
-    EventTarget dispatchEvent(Event event);
+    EventTarget* dispatchEvent(Event event);
 };
 
 } // namespace Cannon::Utils
