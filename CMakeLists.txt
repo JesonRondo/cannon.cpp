@@ -18,7 +18,7 @@ set(build_include_dirs
 include_directories(${build_include_dirs})
 
 # Set compiler options, remove symbol tables and enable optimization level 2
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s -O2")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s -O2 -g0")
 
 set(CPP_FILES
   source/math/Mat3.cpp
@@ -36,12 +36,6 @@ set(CPP_FILES
 
 # My library, add anthor file modify here
 add_library(cannon ${CPP_FILES})
-
-# library with empty main function, for calc size
-add_executable(cannon_lib
-  source/Cannon.cpp
-  ${CPP_FILES}
-)
 
 # GoogleTest requires at least C++14
 set(CMAKE_CXX_STANDARD 14)

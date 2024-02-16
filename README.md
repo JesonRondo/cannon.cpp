@@ -64,6 +64,12 @@ cmake -S . -B build
 cmake --build build
 ```
 
+Update badge.
+
+```shell
+bash ./script/badge.sh
+```
+
 ## Run
 
 > With test case
