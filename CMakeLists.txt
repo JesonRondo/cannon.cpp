@@ -23,6 +23,8 @@ add_library(cannon
   source/math/Vec3.cpp
   source/math/Quaternion.cpp
   source/utils/EventTarget.cpp
+  source/utils/Pool.cpp
+  source/utils/Vec3Pool.cpp
   source/shapes/Shape.cpp
   source/shapes/Sphere.cpp
 )

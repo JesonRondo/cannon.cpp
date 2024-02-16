@@ -27,7 +27,7 @@
  - [ ] Material
  - [ ] NaiveBroadphase
  - [ ] ObjectCollisionMatrix
- - [ ] Pool
+ - [x] Pool
  - [ ] Particle
  - [ ] Plane
  - [ ] PointToPointConstraint
@@ -48,7 +48,7 @@
  - [ ] Transform
  - [ ] Trimesh
  - [x] Vec3
- - [ ] Vec3Pool
+ - [x] Vec3Pool
  - [ ] World
  - [ ] Octree
 

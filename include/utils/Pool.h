@@ -1,6 +1,8 @@
 #ifndef Pool_h
 #define Pool_h
 
+#include <vector>
+
 namespace Cannon::Utils {
 
 template <typename T>
@@ -18,14 +20,14 @@ public:
      * @class Pool
      * @constructor
      */
-    Pool();
+    Pool() {};
 
     /**
      * Release an object after use
      * @method release
      * @param {Object} obj
      */
-    Pool* release(std::vector<T>* obj);
+    Pool* release(std::vector<T> obj);
 
     /**
      * Get an object
