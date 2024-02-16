@@ -2,6 +2,7 @@
 #define Quaternion_h
 
 #include <string>
+#include <array>
 
 namespace Cannon::Math {
 
@@ -31,7 +32,7 @@ public:
      * @constructor
      * @see http://en.wikipedia.org/wiki/Quaternion
      */
-    Quaternion(){ x = 0.0; y = 0.0; z = 0.0; w = 0.0; };
+    Quaternion(){ x = 0.0; y = 0.0; z = 0.0; w = 1.0; };
 
     /**
      * A Quaternion describes a rotation in 3D space. The Quaternion is mathematically defined as Q = x*i + y*j + z*k + w, where (i,j,k) are imaginary basis vectors. (x,y,z) can be seen as a vector related to the axis of rotation, while the real multiplier, w, is related to the amount of rotation.
@@ -53,7 +54,7 @@ public:
      * @param {Number} z
      * @param {Number} w
      */
-    Quaternion set(float x, float y, float z, float w);
+    Quaternion* set(float x, float y, float z, float w);
 
     /**
      * Convert to a readable format
@@ -67,7 +68,7 @@ public:
      * @method toArray
      * @return Array
      */
-    float* toArray();
+    std::array<float, 4> toArray();
 
     /**
      * Set the quaternion components given an axis and an angle.
@@ -75,15 +76,15 @@ public:
      * @param {Vec3} axis
      * @param {Number} angle in radians
      */
-    Quaternion setFromAxisAngle(Vec3 axis, float angle);
+    Quaternion* setFromAxisAngle(Vec3* axis, float angle);
 
     /**
      * Converts the quaternion to axis/angle representation.
      * @method toAxisAngle
      * @param {Vec3} [targetAxis] A vector object to reuse for storing the axis.
-     * @return {Array} An array, first elemnt is the axis and the second is the angle in radians.
+     * @return {Number} the angle in radians.
      */
-    float* toAxisAngle(Vec3 targetAxis);
+    float toAxisAngle(Vec3* targetAxis);
 
     /**
      * Set the quaternion value given two vectors. The resulting rotation will be the needed rotation to rotate u to v.
@@ -91,7 +92,7 @@ public:
      * @param {Vec3} u
      * @param {Vec3} v
      */
-    Quaternion setFromVectors(Vec3 u, Vec3 v);
+    Quaternion* setFromVectors(Vec3* u, Vec3* v);
 
     /**
      * Quaternion multiplication
@@ -100,7 +101,7 @@ public:
      * @param {Quaternion} target Optional.
      * @return {Quaternion}
      */
-    Quaternion mult(Quaternion q, Quaternion target);
+    Quaternion* mult(Quaternion* q, Quaternion* target);
 
     /**
      * Get the inverse quaternion rotation.
@@ -108,7 +109,7 @@ public:
      * @param {Quaternion} target
      * @return {Quaternion}
      */
-    Quaternion inverse(Quaternion target);
+    Quaternion* inverse(Quaternion* target);
 
     /**
      * Get the quaternion conjugate
@@ -116,13 +117,13 @@ public:
      * @param {Quaternion} target
      * @return {Quaternion}
      */
-    Quaternion conjugate(Quaternion target);
+    Quaternion* conjugate(Quaternion* target);
 
     /**
      * Normalize the quaternion. Note that this changes the values of the quaternion.
      * @method normalize
      */
-    Quaternion normalize();
+    Quaternion* normalize();
 
     /**
      * Approximation of quaternion normalization. Works best when quat is already almost-normalized.
@@ -130,7 +131,7 @@ public:
      * @see http://jsperf.com/fast-quaternion-normalization
      * @author unphased, https://github.com/unphased
      */
-    Quaternion normalizeFast();
+    Quaternion* normalizeFast();
 
     /**
      * Multiply the quaternion by a vector
@@ -147,7 +148,7 @@ public:
      * @param {Quaternion} source
      * @return {Quaternion} this
      */
-    Quaternion copy(Quaternion source);
+    Quaternion* copy(Quaternion* source);
 
 
     /**
@@ -155,7 +156,7 @@ public:
      * @method toEuler
      * @param {Vec3} target. "YZX" is default.
      */
-    Quaternion toEuler(Vec3 target);
+    void toEuler(Vec3* target);
 
     /**
      * Convert the quaternion to euler angle representation. Order: YZX, as this page describes: http://www.euclideanspace.com/maths/standards/index.htm
@@ -163,7 +164,7 @@ public:
      * @param {Vec3} target
      * @param {EulerOrder} order.
      */
-    void toEuler(Vec3 target, EulerOrder order);;
+    void toEuler(Vec3* target, EulerOrder order);
 
     /**
      * See http://www.mathworks.com/matlabcentral/fileexchange/20696-function-to-convert-between-dcm-euler-angles-quaternions-and-euler-vectors/content/SpinCalc.m
@@ -191,7 +192,7 @@ public:
      * @param {Quaternion} [target] A quaternion to store the result in. If not provided, a new one will be created.
      * @returns {Quaternion} The "target" object
      */
-    Quaternion slerp(Quaternion toQuat, float t, Quaternion target);
+    Quaternion* slerp(Quaternion* toQuat, float t, Quaternion* target);
 
     /**
      * Rotate an absolute orientation quaternion given an angular velocity and a time step.
@@ -201,7 +202,7 @@ public:
      * @param  {Quaternion} target
      * @return {Quaternion} The "target" object
      */
-    Quaternion integrate(Vec3 angularVelocity, float dt, Vec3 angularFactor, Quaternion target);
+    Quaternion* integrate(Vec3* angularVelocity, float dt, Vec3* angularFactor, Quaternion* target);
 };
 
 }

@@ -31,7 +31,7 @@
  - [ ] Particle
  - [ ] Plane
  - [ ] PointToPointConstraint
- - [ ] Quaternion
+ - [x] Quaternion
  - [ ] Ray
  - [ ] RaycastVehicle
  - [ ] RaycastResult

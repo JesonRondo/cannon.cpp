@@ -43,6 +43,7 @@ enable_testing()
 add_executable(cannon_test
   test/vec3_test.cc
   test/mat3_test.cc
+  test/quaternion_test.cc
 )
 target_link_libraries(cannon_test GTest::gtest_main cannon)
 
