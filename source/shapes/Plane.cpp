@@ -2,7 +2,9 @@
 
 using namespace Cannon::Shapes;
 
-Plane::Plane() : Shape(ShapeTypes::PLANE) {}
+Plane::Plane() : Shape(ShapeTypes::PLANE) {
+    this->boundingSphereRadius = MAX_FLOAT;
+}
 
 void Plane::computeWorldNormal(Math::Quaternion* quat) {
     this->worldNormal.set(0, 0, 1);
@@ -15,7 +17,7 @@ void Plane::calculateLocalInertia(float mass, Math::Vec3* target) {
 }
 
 double Plane::volume() {
-    return Number.MAX_VALUE; // The plane is infinite...
+    return MAX_FLOAT; // The plane is infinite...
 }
 
 Cannon::Math::Vec3 tempNormal;
@@ -26,7 +28,7 @@ void Plane::calculateWorldAABB(
     Math::Vec3* max) {
     tempNormal.set(0, 0, 1);
     quat->vmult(&tempNormal, &tempNormal);
-    auto maxVal = Number.MAX_VALUE;
+    float maxVal = MAX_FLOAT;
     min->set(-maxVal, -maxVal, -maxVal);
     max->set(maxVal, maxVal, maxVal);
 
@@ -47,4 +49,8 @@ void Plane::calculateWorldAABB(
     } else if (tempNormal.z == -1) {
         min->z = pos->z;
     }
+}
+
+void Plane::updateBoundingSphereRadius() {
+    this->boundingSphereRadius = MAX_FLOAT;
 }

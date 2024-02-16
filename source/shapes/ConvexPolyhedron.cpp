@@ -1,6 +1,6 @@
 #include "shapes/ConvexPolyhedron.h"
 
-#include <iostream>
+// #include <iostream>
 #include <cmath>
 #include <stdexcept>
 #include "math/Vec3.h"
@@ -113,22 +113,22 @@ void ConvexPolyhedron::computeNormals() {
         this->getFaceNormal(i, n);
         n->negate(n);
 
-        auto vertex = &vertices[faces[i][0]];
-        if (n->dot(vertex) < 0) {
-            std::cout << ".faceNormals[" +
-                std::to_string(i) +
-                "] = Vec3(" +
-                n->toString() +
-                ") looks like it points into the shape? The vertices follow. Make sure they are ordered CCW around the normal, using the right hand rule." << std::endl;
+        // auto vertex = &vertices[faces[i][0]];
+        // if (n->dot(vertex) < 0) {
+            // std::cout << ".faceNormals[" +
+            //     std::to_string(i) +
+            //     "] = Vec3(" +
+            //     n->toString() +
+            //     ") looks like it points into the shape? The vertices follow. Make sure they are ordered CCW around the normal, using the right hand rule." << std::endl;
 
-            for (int j = 0; j < faces[i].size(); j++) {
-                std::cout << ".vertices[" +
-                    std::to_string(faces[i][j]) +
-                    "] = Vec3(" +
-                    vertices[faces[i][j]].toString() +
-                    ")" << std::endl;
-            }
-        }
+            // for (int j = 0; j < faces[i].size(); j++) {
+                // std::cout << ".vertices[" +
+                //     std::to_string(faces[i][j]) +
+                //     "] = Vec3(" +
+                //     vertices[faces[i][j]].toString() +
+                //     ")" << std::endl;
+            // }
+        // }
     }
 }
 

@@ -17,8 +17,10 @@ set(build_include_dirs
   "${CMAKE_CURRENT_SOURCE_DIR}")
 include_directories(${build_include_dirs})
 
-# My library, add anthor file modify here
-add_library(cannon
+# Set compiler options, remove symbol tables and enable optimization level 2
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s -O2")
+
+set(CPP_FILES
   source/math/Mat3.cpp
   source/math/Vec3.cpp
   source/math/Quaternion.cpp
@@ -30,6 +32,15 @@ add_library(cannon
   source/shapes/ConvexPolyhedron.cpp
   source/shapes/Box.cpp
   source/shapes/Plane.cpp
+)
+
+# My library, add anthor file modify here
+add_library(cannon ${CPP_FILES})
+
+# library with empty main function, for calc size
+add_executable(cannon_lib
+  source/Cannon.cpp
+  ${CPP_FILES}
 )
 
 # GoogleTest requires at least C++14
