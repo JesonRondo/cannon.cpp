@@ -23,15 +23,15 @@ public:
      */
     Plane();
 
-    void computeWorldNormal(Math::Quaternion quat);
+    void computeWorldNormal(Math::Quaternion* quat);
 
     void calculateLocalInertia(float mass, Math::Vec3* target);
 
     double volume();
 
     void calculateWorldAABB(
-        Math::Vec3 pos,
-        Math::Quaternion quat,
+        Math::Vec3* pos,
+        Math::Quaternion* quat,
         Math::Vec3* min,
         Math::Vec3* max);
 

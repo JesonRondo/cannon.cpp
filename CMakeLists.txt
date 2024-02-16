@@ -29,6 +29,7 @@ add_library(cannon
   source/shapes/Sphere.cpp
   source/shapes/ConvexPolyhedron.cpp
   source/shapes/Box.cpp
+  source/shapes/Plane.cpp
 )
 
 # GoogleTest requires at least C++14

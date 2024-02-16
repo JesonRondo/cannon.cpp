@@ -5,7 +5,7 @@
  - [ ] AABB
  - [ ] ArrayCollisionMatrix
  - [ ] Body
- - [ ] Box
+ - [x] Box
  - [ ] Broadphase
  - [ ] Constraint
  - [ ] ContactEquation
@@ -29,7 +29,7 @@
  - [ ] ObjectCollisionMatrix
  - [x] Pool
  - [ ] Particle
- - [ ] Plane
+ - [x] Plane
  - [ ] PointToPointConstraint
  - [x] Quaternion
  - [ ] Ray
