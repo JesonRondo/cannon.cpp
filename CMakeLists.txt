@@ -27,6 +27,8 @@ add_library(cannon
   source/utils/Vec3Pool.cpp
   source/shapes/Shape.cpp
   source/shapes/Sphere.cpp
+  source/shapes/ConvexPolyhedron.cpp
+  source/shapes/Box.cpp
 )
 
 # GoogleTest requires at least C++14
@@ -50,6 +52,7 @@ add_executable(cannon_test
   test/mat3_test.cc
   test/quaternion_test.cc
   test/sphere_test.cc
+  test/box_test.cc
 )
 target_link_libraries(cannon_test GTest::gtest_main cannon)
 

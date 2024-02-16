@@ -1,6 +1,8 @@
 #ifndef Box_h
 #define Box_h
 
+#include <array>
+#include <functional>
 #include "shapes/Shape.h"
 #include "shapes/ConvexPolyhedron.h"
 #include "math/Quaternion.h"
@@ -8,7 +10,7 @@
 
 namespace Cannon::Shapes {
 
-typedef void (*CornerCallback)(float x, float y, float z);
+typedef std::function<void(float, float, float)> CornerCallback;
 
 class Box : public Shape {
 public:
@@ -57,18 +59,17 @@ public:
      * @param {Quaternion} quat             Orientation to apply to the normal vectors. If not provided, the vectors will be in respect to the local frame.
      * @return {array}
      */
-    std::array<Math::Vec3*, 6>* getSideNormals(
-        std::array<Math::Vec3*, 6>* sixTargetVectors,
+    std::array<Math::Vec3, 6>* getSideNormals(
+        std::array<Math::Vec3, 6>* sixTargetVectors,
         Math::Quaternion* quat);
 
     double volume();
 
     void updateBoundingSphereRadius();
 
-    void forEachWorldCorner(Math::Vec3* pos, Math::Quaternion* quat, CornerCallback* callback);
+    void forEachWorldCorner(Math::Vec3* pos, Math::Quaternion* quat, CornerCallback callback);
 
     void calculateWorldAABB(Math::Vec3* pos, Math::Quaternion* quat, Math::Vec3* min, Math::Vec3* max);
-
 };
 
 }

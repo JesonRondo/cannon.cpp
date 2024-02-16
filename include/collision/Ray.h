@@ -2,6 +2,7 @@
 #define Ray_h
 
 #include <vector>
+#include <functional>
 #include "math/Vec3.h"
 #include "math/Quaternion.h"
 #include "objects/Body.h"
@@ -29,7 +30,7 @@ struct RaycastOptions {
     bool checkCollisionResponse = true;
 };
 
-typedef void (*RaycastResultCallback)(RaycastResult* result);
+typedef std::function<void(RaycastResult* result)> RaycastResultCallback;
 
 class Ray {
 private:
@@ -109,7 +110,7 @@ public:
      * Current, user-provided result callback. Will be used if mode is Ray.ALL.
      * @property {Function} callback
      */
-    RaycastResultCallback* callback;
+    RaycastResultCallback callback;
 
     /*
     * As per "Barycentric Technique" as named here http://www.blackpawn.com/texts/pointinpoly/default.html But without the division

@@ -279,7 +279,7 @@ public:
      * @param  {Function} callback
      * @return {boolean} True if any body was hit.
      */
-    bool raycastAll(Math::Vec3 from, Math::Vec3 to, Collision::RaycastOptions options, Collision::RaycastResultCallback* callback);
+    bool raycastAll(Math::Vec3 from, Math::Vec3 to, Collision::RaycastOptions options, Collision::RaycastResultCallback callback);
 
     /**
      * Ray cast, and stop at the first result. Note that the order is random - but the method is fast.

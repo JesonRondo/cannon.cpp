@@ -21,7 +21,7 @@ public:
      * @property vertices
      * @type {Array}
      */
-    std::vector<Math::Vec3> vertices;
+    std::vector<Math::Vec3>* vertices;
 
     std::vector<Math::Vec3> worldVertices; // World transformed version of .vertices
     bool worldVerticesNeedsUpdate = true;
@@ -31,7 +31,7 @@ public:
      * @property faces
      * @type {Array}
      */
-    std::vector<std::vector<int>> faces;
+    std::vector<std::vector<int>>* faces;
 
     /**
      * Array of Vec3
@@ -54,7 +54,18 @@ public:
      * If given, these locally defined, normalized axes are the only ones being checked when doing separating axis check.
      * @property {Array} uniqueAxes
      */
-    std::vector<Math::Vec3> uniqueAxes;
+    std::vector<Math::Vec3>* uniqueAxes = nullptr;
+
+    /**
+     * Get face normal given 3 vertices
+     * @static
+     * @method computeNormal
+     * @param {Vec3} va
+     * @param {Vec3} vb
+     * @param {Vec3} vc
+     * @param {Vec3} target
+     */
+    static void computeNormal(Math::Vec3* va, Math::Vec3* vb, Math::Vec3* vc, Math::Vec3* target);
 
     /**
      * A set of polygons describing a convex shape.
@@ -75,231 +86,226 @@ public:
      * @todo Move the clipping functions to ContactGenerator?
      * @todo Automatically merge coplanar polygons in constructor.
      */
+    ConvexPolyhedron();
     ConvexPolyhedron(
-        std::vector<Math::Vec3> points,
-        std::vector<std::vector<int>> faces,
-        std::vector<Math::Vec3> uniqueAxes);
+        std::vector<Math::Vec3>* points,
+        std::vector<std::vector<int>>* faces);
+    ConvexPolyhedron(
+        std::vector<Math::Vec3>* points,
+        std::vector<std::vector<int>>* faces,
+        std::vector<Math::Vec3>* uniqueAxes);
 
-        /**
-         * Computes uniqueEdges
-         * @method computeEdges
-         */
-        void computeEdges();
+    ~ConvexPolyhedron();
 
-        /**
-         * Compute the normals of the faces. Will reuse existing Vec3 objects in the .faceNormals array if they exist.
-         * @method computeNormals
-         */
-        void computeNormals();
+    /**
+     * Computes uniqueEdges
+     * @method computeEdges
+     */
+    void computeEdges();
 
-        /**
-         * Get face normal given 3 vertices
-         * @static
-         * @method getFaceNormal
-         * @param {Vec3} va
-         * @param {Vec3} vb
-         * @param {Vec3} vc
-         * @param {Vec3} target
-         */
-        void computeNormal(Math::Vec3 va, Math::Vec3 vb, Math::Vec3 vc, Math::Vec3* target);
+    /**
+     * Compute the normals of the faces. Will reuse existing Vec3 objects in the .faceNormals array if they exist.
+     * @method computeNormals
+     */
+    void computeNormals();
 
-        /**
-         * Compute the normal of a face from its vertices
-         * @method getFaceNormal
-         * @param  {Number} i
-         * @param  {Vec3} target
-         */
-        void getFaceNormal(int i, Math::Vec3* target);
+    /**
+     * Compute the normal of a face from its vertices
+     * @method getFaceNormal
+     * @param  {Number} i
+     * @param  {Vec3} target
+     */
+    void getFaceNormal(int i, Math::Vec3* target);
 
-        /**
-         * @method clipAgainstHull
-         * @param {Vec3} posA
-         * @param {Quaternion} quatA
-         * @param {ConvexPolyhedron} hullB
-         * @param {Vec3} posB
-         * @param {Quaternion} quatB
-         * @param {Vec3} separatingNormal
-         * @param {Number} minDist Clamp distance
-         * @param {Number} maxDist
-         * @param {array} result The an array of contact point objects, see clipFaceAgainstHull
-         * @see http://bullet.googlecode.com/svn/trunk/src/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.cpp
-         */
-        void clipAgainstHull(
-            Math::Vec3 posA,
-            Math::Quaternion quatA,
-            ConvexPolyhedron* hullB,
-            Math::Vec3 posB,
-            Math::Quaternion quatB,
-            Math::Vec3 separatingNormal,
-            float minDist,
-            float maxDist,
-            std::vector<PointObject>* result);
+    /**
+     * @method clipAgainstHull
+     * @param {Vec3} posA
+     * @param {Quaternion} quatA
+     * @param {ConvexPolyhedron} hullB
+     * @param {Vec3} posB
+     * @param {Quaternion} quatB
+     * @param {Vec3} separatingNormal
+     * @param {Number} minDist Clamp distance
+     * @param {Number} maxDist
+     * @param {array} result The an array of contact point objects, see clipFaceAgainstHull
+     * @see http://bullet.googlecode.com/svn/trunk/src/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.cpp
+     */
+    void clipAgainstHull(
+        Math::Vec3* posA,
+        Math::Quaternion* quatA,
+        ConvexPolyhedron* hullB,
+        Math::Vec3* posB,
+        Math::Quaternion* quatB,
+        Math::Vec3* separatingNormal,
+        float minDist,
+        float maxDist,
+        std::vector<PointObject>* result);
 
-        /**
-         * Find the separating axis between this hull and another
-         * @method findSeparatingAxis
-         * @param {ConvexPolyhedron} hullB
-         * @param {Vec3} posA
-         * @param {Quaternion} quatA
-         * @param {Vec3} posB
-         * @param {Quaternion} quatB
-         * @param {Vec3} target The target vector to save the axis in
-         * @return {bool} Returns false if a separation is found, else true
-         */
-        bool findSeparatingAxis(
-            ConvexPolyhedron* hullB,
-            Math::Vec3 posA,
-            Math::Quaternion quatA,
-            Math::Vec3 posB,
-            Math::Quaternion quatB,
-            Math::Vec3* target,
-            std::vector<int>* faceListA,
-            std::vector<int>* faceListB);
+    /**
+     * Find the separating axis between this hull and another
+     * @method findSeparatingAxis
+     * @param {ConvexPolyhedron} hullB
+     * @param {Vec3} posA
+     * @param {Quaternion} quatA
+     * @param {Vec3} posB
+     * @param {Quaternion} quatB
+     * @param {Vec3} target The target vector to save the axis in
+     * @return {bool} Returns false if a separation is found, else true
+     */
+    bool findSeparatingAxis(
+        ConvexPolyhedron* hullB,
+        Math::Vec3* posA,
+        Math::Quaternion* quatA,
+        Math::Vec3* posB,
+        Math::Quaternion* quatB,
+        Math::Vec3* target,
+        std::vector<int>* faceListA,
+        std::vector<int>* faceListB);
 
-        /**
-         * Test separating axis against two hulls. Both hulls are projected onto the axis and the overlap size is returned if there is one.
-         * @method testSepAxis
-         * @param {Vec3} axis
-         * @param {ConvexPolyhedron} hullB
-         * @param {Vec3} posA
-         * @param {Quaternion} quatA
-         * @param {Vec3} posB
-         * @param {Quaternion} quatB
-         * @return {number} The overlap depth, or -1 if no penetration.
-         */
-        float testSepAxis(
-            Math::Vec3 axis,
-            ConvexPolyhedron* hullB,
-            Math::Vec3 posA,
-            Math::Quaternion quatA,
-            Math::Vec3 posB,
-            Math::Quaternion quatB);
+    /**
+     * Test separating axis against two hulls. Both hulls are projected onto the axis and the overlap size is returned if there is one.
+     * @method testSepAxis
+     * @param {Vec3} axis
+     * @param {ConvexPolyhedron} hullB
+     * @param {Vec3} posA
+     * @param {Quaternion} quatA
+     * @param {Vec3} posB
+     * @param {Quaternion} quatB
+     * @return {number} The overlap depth, or -1 if no penetration.
+     */
+    float testSepAxis(
+        Math::Vec3* axis,
+        ConvexPolyhedron* hullB,
+        Math::Vec3* posA,
+        Math::Quaternion* quatA,
+        Math::Vec3* posB,
+        Math::Quaternion* quatB);
 
-        /**
-         * @method calculateLocalInertia
-         * @param  {Number} mass
-         * @param  {Vec3} target
-         */
-        void calculateLocalInertia(float mass, Math::Vec3* target);
+    /**
+     * @method calculateLocalInertia
+     * @param  {Number} mass
+     * @param  {Vec3} target
+     */
+    void calculateLocalInertia(float mass, Math::Vec3* target);
 
-        /**
-         * @method getPlaneConstantOfFace
-         * @param  {Number} face_i Index of the face
-         * @return {Number}
-         */
-        float getPlaneConstantOfFace(int face_i);
+    /**
+     * @method getPlaneConstantOfFace
+     * @param  {Number} face_i Index of the face
+     * @return {Number}
+     */
+    float getPlaneConstantOfFace(int face_i);
 
-        /**
-         * Clip a face against a hull.
-         * @method clipFaceAgainstHull
-         * @param {Vec3} separatingNormal
-         * @param {Vec3} posA
-         * @param {Quaternion} quatA
-         * @param {Array} worldVertsB1 An array of Vec3 with vertices in the world frame.
-         * @param {Number} minDist Distance clamping
-         * @param {Number} maxDist
-         * @param Array result Array to store resulting contact points in. Will be objects with properties: point, depth, normal. These are represented in world coordinates.
-         */
-        void clipFaceAgainstHull(
-            Math::Vec3 separatingNormal,
-            Math::Vec3 posA,
-            Math::Quaternion quatA,
-            std::vector<Math::Vec3> worldVertsB1,
-            float minDist,
-            float maxDist,
-            std::vector<PointObject>* result);
+    /**
+     * Clip a face against a hull.
+     * @method clipFaceAgainstHull
+     * @param {Vec3} separatingNormal
+     * @param {Vec3} posA
+     * @param {Quaternion} quatA
+     * @param {Array} worldVertsB1 An array of Vec3 with vertices in the world frame.
+     * @param {Number} minDist Distance clamping
+     * @param {Number} maxDist
+     * @param Array result Array to store resulting contact points in. Will be objects with properties: point, depth, normal. These are represented in world coordinates.
+     */
+    void clipFaceAgainstHull(
+        Math::Vec3* separatingNormal,
+        Math::Vec3* posA,
+        Math::Quaternion* quatA,
+        std::vector<Math::Vec3>* worldVertsB1,
+        float minDist,
+        float maxDist,
+        std::vector<PointObject>* result);
 
-        /**
-         * Clip a face in a hull against the back of a plane.
-         * @method clipFaceAgainstPlane
-         * @param {Array} inVertices
-         * @param {Array} outVertices
-         * @param {Vec3} planeNormal
-         * @param {Number} planeConstant The constant in the mathematical plane equation
-         */
-        void clipFaceAgainstPlane(
-            std::vector<Math::Vec3> inVertices,
-            std::vector<Math::Vec3>* outVertices,
-            Math::Vec3 planeNormal,
-            float planeConstant);
+    /**
+     * Clip a face in a hull against the back of a plane.
+     * @method clipFaceAgainstPlane
+     * @param {Array} inVertices
+     * @param {Array} outVertices
+     * @param {Vec3} planeNormal
+     * @param {Number} planeConstant The constant in the mathematical plane equation
+     */
+    void clipFaceAgainstPlane(
+        std::vector<Math::Vec3>* inVertices,
+        std::vector<Math::Vec3>* outVertices,
+        Math::Vec3* planeNormal,
+        float planeConstant);
 
-        // Updates .worldVertices and sets .worldVerticesNeedsUpdate to false.
-        void computeWorldVertices(Math::Vec3 position, Math::Quaternion quat);
+    // Updates .worldVertices and sets .worldVerticesNeedsUpdate to false.
+    void computeWorldVertices(Math::Vec3* position, Math::Quaternion* quat);
 
-        void computeLocalAABB(Math::Vec3* aabbmin, Math::Vec3* aabbmax);
+    void computeLocalAABB(Math::Vec3* aabbmin, Math::Vec3* aabbmax);
 
-        /**
-        * Updates .worldVertices and sets .worldVerticesNeedsUpdate to false.
-        * @method computeWorldFaceNormals
-        * @param  {Quaternion} quat
-        */
-        void computeWorldFaceNormals(Math::Quaternion quat);
+    /**
+    * Updates .worldVertices and sets .worldVerticesNeedsUpdate to false.
+    * @method computeWorldFaceNormals
+    * @param  {Quaternion} quat
+    */
+    void computeWorldFaceNormals(Math::Quaternion* quat);
 
-        /**
-        * @method updateBoundingSphereRadius
-        */
-        void updateBoundingSphereRadius();
+    /**
+    * @method updateBoundingSphereRadius
+    */
+    void updateBoundingSphereRadius();
 
-        /**
-        * @method calculateWorldAABB
-        * @param {Vec3}        pos
-        * @param {Quaternion}  quat
-        * @param {Vec3}        min
-        * @param {Vec3}        max
-        */
-        void calculateWorldAABB(
-            Math::Vec3 pos,
-            Math::Quaternion quat,
-            Math::Vec3* min,
-            Math::Vec3* max);
+    /**
+    * @method calculateWorldAABB
+    * @param {Vec3}        pos
+    * @param {Quaternion}  quat
+    * @param {Vec3}        min
+    * @param {Vec3}        max
+    */
+    void calculateWorldAABB(
+        Math::Vec3* pos,
+        Math::Quaternion* quat,
+        Math::Vec3* min,
+        Math::Vec3* max);
 
-        /**
-        * Get approximate convex volume
-        * @method volume
-        * @return {Number}
-        */
-        double volume();
+    /**
+    * Get approximate convex volume
+    * @method volume
+    * @return {Number}
+    */
+    double volume();
 
-        /**
-        * Get an average of all the vertices positions
-        * @method getAveragePointLocal
-        * @param  {Vec3} target
-        * @return {Vec3}
-        */
-        Math::Vec3* getAveragePointLocal(Math::Vec3* target);
+    /**
+    * Get an average of all the vertices positions
+    * @method getAveragePointLocal
+    * @param  {Vec3} target
+    * @return {Vec3}
+    */
+    Math::Vec3* getAveragePointLocal(Math::Vec3* target);
 
-        /**
-        * Transform all local points. Will change the .vertices
-        * @method transformAllPoints
-        * @param  {Vec3} offset
-        * @param  {Quaternion} quat
-        */
-        void transformAllPoints(Math::Vec3 offset, Math::Quaternion quat);
+    /**
+    * Transform all local points. Will change the .vertices
+    * @method transformAllPoints
+    * @param  {Vec3} offset
+    * @param  {Quaternion} quat
+    */
+    void transformAllPoints(Math::Vec3* offset, Math::Quaternion* quat);
 
-        /**
-        * Checks whether p is inside the polyhedra. Must be in local coords. The point lies outside of the convex hull of the other points if and only if the direction of all the vectors from it to those other points are on less than one half of a sphere around it.
-        * @method pointIsInside
-        * @param  {Vec3} p      A point given in local coordinates
-        * @return {Boolean}
-        */
-        bool pointIsInside(Math::Vec3 p);
+    /**
+    * Checks whether p is inside the polyhedra. Must be in local coords. The point lies outside of the convex hull of the other points if and only if the direction of all the vectors from it to those other points are on less than one half of a sphere around it.
+    * @method pointIsInside
+    * @param  {Vec3} p      A point given in local coordinates
+    * @return {Boolean}
+    */
+    bool pointIsInside(Math::Vec3* p);
 
-        /**
-        * Get max and min dot product of a convex hull at position (pos,quat) projected onto an axis. Results are saved in the array maxmin.
-        * @static
-        * @method project
-        * @param {ConvexPolyhedron} hull
-        * @param {Vec3} axis
-        * @param {Vec3} pos
-        * @param {Quaternion} quat
-        * @param {array} result result[0] and result[1] will be set to maximum and minimum, respectively.
-        */
-        void project(
-            ConvexPolyhedron* hull,
-            Math::Vec3 axis,
-            Math::Vec3 pos,
-            Math::Quaternion quat,
-            std::array<float, 2> result);
+    /**
+    * Get max and min dot product of a convex hull at position (pos,quat) projected onto an axis. Results are saved in the array maxmin.
+    * @static
+    * @method project
+    * @param {ConvexPolyhedron} hull
+    * @param {Vec3} axis
+    * @param {Vec3} pos
+    * @param {Quaternion} quat
+    * @param {array} result result[0] and result[1] will be set to maximum and minimum, respectively.
+    */
+    void project(
+        ConvexPolyhedron* hull,
+        Math::Vec3* axis,
+        Math::Vec3* pos,
+        Math::Quaternion* quat,
+        std::array<float, 2>* result);
 };
 
 }
