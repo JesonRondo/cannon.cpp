@@ -184,6 +184,13 @@ public:
         Math::Quaternion* quatA,
         Math::Vec3* posB,
         Math::Quaternion* quatB,
+        Math::Vec3* target);
+    bool findSeparatingAxis(
+        ConvexPolyhedron* hullB,
+        Math::Vec3* posA,
+        Math::Quaternion* quatA,
+        Math::Vec3* posB,
+        Math::Quaternion* quatB,
         Math::Vec3* target,
         std::vector<int>* faceListA,
         std::vector<int>* faceListB);

@@ -14,7 +14,7 @@
  - [ ] Narrowphase
  - [ ] ConeTwistConstraint
  - [ ] ContactMaterial
- - [ ] ConvexPolyhedron
+ - [x] ConvexPolyhedron
  - [ ] Cylinder
  - [ ] DistanceConstraint
  - [ ] Equation

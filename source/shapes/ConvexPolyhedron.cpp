@@ -377,6 +377,16 @@ bool ConvexPolyhedron::findSeparatingAxis(
     return true;
 }
 
+bool ConvexPolyhedron::findSeparatingAxis(
+    ConvexPolyhedron* hullB,
+    Math::Vec3* posA,
+    Math::Quaternion* quatA,
+    Math::Vec3* posB,
+    Math::Quaternion* quatB,
+    Math::Vec3* target) {
+    return this->findSeparatingAxis(hullB, posA, quatA, posB, quatB, target, nullptr, nullptr);
+}
+
 std::array<float, 2> maxminA;
 std::array<float, 2> maxminB;
 DepthOrBool ConvexPolyhedron::testSepAxis(
