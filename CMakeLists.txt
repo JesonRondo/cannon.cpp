@@ -60,6 +60,7 @@ add_executable(cannon_test
   test/quaternion_test.cc
   test/sphere_test.cc
   test/box_test.cc
+  test/convex_polyhedron_test.cc
 )
 target_link_libraries(cannon_test GTest::gtest_main cannon)
 

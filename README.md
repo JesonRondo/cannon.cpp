@@ -7,7 +7,7 @@
  - [ ] AABB
  - [ ] ArrayCollisionMatrix
  - [ ] Body
- - [x] Box
+ - [ ] Box
  - [ ] Broadphase
  - [ ] Constraint
  - [ ] ContactEquation
@@ -76,6 +76,4 @@ bash ./script/badge.sh
 
 ```shell
 cd build && ctest
-#or
-./build/cannon_test
 ```
