@@ -32,6 +32,8 @@ public:
         elements[3], elements[4], elements[5],
         elements[6], elements[7], elements[8] } {};
 
+    ~Mat3() {};
+
     /**
      * Sets the matrix to identity
      * @method identity

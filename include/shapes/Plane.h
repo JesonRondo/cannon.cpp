@@ -25,6 +25,8 @@ public:
      */
     Plane();
 
+    ~Plane();
+
     void computeWorldNormal(Math::Quaternion* quat);
 
     void calculateLocalInertia(float mass, Math::Vec3* target);

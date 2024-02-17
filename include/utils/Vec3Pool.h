@@ -15,6 +15,8 @@ public:
      */
     Vec3Pool();
 
+    ~Vec3Pool();
+
     /**
      * Construct a vector
      * @method constructObject

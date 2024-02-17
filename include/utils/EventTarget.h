@@ -31,6 +31,8 @@ public:
      */
     EventTarget() {};
 
+    ~EventTarget() {};
+
     /**
      * Add an event listener
      * @method addEventListener

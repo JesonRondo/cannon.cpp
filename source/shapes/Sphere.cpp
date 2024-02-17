@@ -19,6 +19,8 @@ Sphere::Sphere(float radius) : Shape(ShapeTypes::SPHERE) {
     this->updateBoundingSphereRadius();
 }
 
+Sphere::~Sphere() {}
+
 void Sphere::calculateLocalInertia(float mass, Math::Vec3* target) {
     float I = 2.0 / 5.0 * mass * this->radius * this->radius;
     target->set(I, I, I);

@@ -84,6 +84,8 @@ public:
      */
     Shape(ShapeTypes type);
 
+    ~Shape();
+
     /**
      * Computes the bounding sphere radius. The result is stored in the property .boundingSphereRadius
      * @method updateBoundingSphereRadius

@@ -8,6 +8,11 @@ Box::Box(Math::Vec3* halfExtents) : Shape(ShapeTypes::BOX) {
     this->updateBoundingSphereRadius();
 }
 
+Box::~Box() {
+    delete this->halfExtents;
+    delete this->convexPolyhedronRepresentation;
+}
+
 void Box::updateConvexPolyhedronRepresentation() {
     float sx = this->halfExtents->x;
     float sy = this->halfExtents->y;

@@ -46,6 +46,8 @@ public:
      */
     Quaternion(float x, float y, float z, float w): x(x), y(y), z(z), w(w) {};
 
+    ~Quaternion() {};
+
     /**
      * Set the value of the quaternion.
      * @method set

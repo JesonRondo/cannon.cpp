@@ -37,6 +37,8 @@ public:
      */
     Box(Math::Vec3* halfExtents);
 
+    ~Box();
+
     /**
      * Updates the local convex polyhedron representation used for some collisions.
      * @method updateConvexPolyhedronRepresentation

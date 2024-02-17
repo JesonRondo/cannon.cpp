@@ -6,6 +6,9 @@ Plane::Plane() : Shape(ShapeTypes::PLANE) {
     this->boundingSphereRadius = MAX_FLOAT;
 }
 
+Plane::~Plane() {
+}
+
 void Plane::computeWorldNormal(Math::Quaternion* quat) {
     this->worldNormal.set(0, 0, 1);
     quat->vmult(&this->worldNormal, &this->worldNormal);

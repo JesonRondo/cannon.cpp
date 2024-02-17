@@ -24,6 +24,8 @@ public:
     Sphere();
     Sphere(float radius);
 
+    ~Sphere();
+
     void calculateLocalInertia(float mass, Math::Vec3* target);
 
     double volume();

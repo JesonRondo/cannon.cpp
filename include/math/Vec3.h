@@ -61,6 +61,8 @@ public:
      */
     Vec3(float x, float y, float z): x(x), y(y), z(z) {};
 
+    ~Vec3() {};
+
     /**
      * Vector cross product
      * @method cross

@@ -22,6 +22,8 @@ public:
      */
     Pool() {};
 
+    ~Pool() {};
+
     /**
      * Release an object after use
      * @method release
