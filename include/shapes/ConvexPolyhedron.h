@@ -5,12 +5,21 @@
 #include "shapes/Shape.h"
 #include "math/Quaternion.h"
 
+#ifndef MAX_FLOAT
+#define MAX_FLOAT 3.40282e+38
+#endif
+
 namespace Cannon::Shapes {
 
 struct PointObject {
     Math::Vec3 point;
     Math::Vec3 normal;
     float depth;
+};
+
+struct DepthOrBool {
+    float depth;
+    bool boolean;
 };
 
 class ConvexPolyhedron : public Shape {
@@ -66,6 +75,23 @@ public:
      * @param {Vec3} target
      */
     static void computeNormal(Math::Vec3* va, Math::Vec3* vb, Math::Vec3* vc, Math::Vec3* target);
+    
+    /**
+    * Get max and min dot product of a convex hull at position (pos,quat) projected onto an axis. Results are saved in the array maxmin.
+    * @static
+    * @method project
+    * @param {ConvexPolyhedron} hull
+    * @param {Vec3} axis
+    * @param {Vec3} pos
+    * @param {Quaternion} quat
+    * @param {array} result result[0] and result[1] will be set to maximum and minimum, respectively.
+    */
+    static void project(
+        ConvexPolyhedron* hull,
+        Math::Vec3* axis,
+        Math::Vec3* pos,
+        Math::Quaternion* quat,
+        std::array<float, 2>* result);
 
     /**
      * A set of polygons describing a convex shape.
@@ -171,9 +197,9 @@ public:
      * @param {Quaternion} quatA
      * @param {Vec3} posB
      * @param {Quaternion} quatB
-     * @return {number} The overlap depth, or -1 if no penetration.
+     * @return {number} The overlap depth, or false if no penetration.
      */
-    float testSepAxis(
+    DepthOrBool testSepAxis(
         Math::Vec3* axis,
         ConvexPolyhedron* hullB,
         Math::Vec3* posA,
@@ -289,23 +315,6 @@ public:
     * @return {Boolean}
     */
     bool pointIsInside(Math::Vec3* p);
-
-    /**
-    * Get max and min dot product of a convex hull at position (pos,quat) projected onto an axis. Results are saved in the array maxmin.
-    * @static
-    * @method project
-    * @param {ConvexPolyhedron} hull
-    * @param {Vec3} axis
-    * @param {Vec3} pos
-    * @param {Quaternion} quat
-    * @param {array} result result[0] and result[1] will be set to maximum and minimum, respectively.
-    */
-    void project(
-        ConvexPolyhedron* hull,
-        Math::Vec3* axis,
-        Math::Vec3* pos,
-        Math::Quaternion* quat,
-        std::array<float, 2>* result);
 };
 
 }

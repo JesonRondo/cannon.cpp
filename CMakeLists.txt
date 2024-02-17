@@ -24,6 +24,7 @@ set(CPP_FILES
   source/math/Mat3.cpp
   source/math/Vec3.cpp
   source/math/Quaternion.cpp
+  source/math/Transform.cpp
   source/utils/EventTarget.cpp
   source/utils/Pool.cpp
   source/utils/Vec3Pool.cpp

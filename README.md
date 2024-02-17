@@ -47,7 +47,7 @@
  - [x] Sphere
  - [ ] SplitSolver
  - [ ] Spring
- - [ ] Transform
+ - [x] Transform
  - [ ] Trimesh
  - [x] Vec3
  - [x] Vec3Pool
