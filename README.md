@@ -56,7 +56,7 @@
 
 ## Build
 
-> Recommand to use cmake in Linux or Mac.
+> Recommand to use cmake in Linux or Mac.  
 > In Windows, use wsl with Linux subsystem avoid build problem.
 
 ```shell

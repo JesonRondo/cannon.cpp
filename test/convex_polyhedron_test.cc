@@ -115,7 +115,6 @@ TEST(ConvexPolyhedron, ClipFaceAgainstPlane) {
     EXPECT_EQ(outverts->size(), 4);
 }
 
-// TODO
 TEST(ConvexPolyhedron, ClipFaceAgainstHull) {
     // Create box
     auto hullA = createBoxHull(0.5);
@@ -140,7 +139,7 @@ TEST(ConvexPolyhedron, ClipFaceAgainstHull) {
     // into the plane worldVertsB we constructed
     hullA->clipFaceAgainstHull(sepNormal, posA, quatA, worldVertsB, -100, 100, res);
 
-    // EXPECT_EQ(res->size(), 4);
+    // EXPECT_EQ(res->size(), 4); // TODO: size to be 0 if open -O2 compiler flag 
 }
 
 TEST(ConvexPolyhedron, ClipAgainstHull) {
