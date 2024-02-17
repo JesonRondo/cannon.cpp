@@ -2,12 +2,6 @@
 
 using namespace Cannon::Shapes;
 
-Box::Box(Math::Vec3* halfExtents) : Shape(ShapeTypes::BOX) {
-    this->halfExtents = halfExtents;
-    this->updateConvexPolyhedronRepresentation();
-    this->updateBoundingSphereRadius();
-}
-
 Box::~Box() {
     delete this->halfExtents;
     delete this->convexPolyhedronRepresentation;
@@ -18,7 +12,7 @@ void Box::updateConvexPolyhedronRepresentation() {
     float sy = this->halfExtents->y;
     float sz = this->halfExtents->z;
 
-    std::vector<Math::Vec3> vertices = {
+    std::vector<Math::Vec3>* vertices = new std::vector<Math::Vec3>{
         Math::Vec3(-sx, -sy, -sz),
         Math::Vec3(sx, -sy, -sz),
         Math::Vec3(sx, sy, -sz),
@@ -29,7 +23,7 @@ void Box::updateConvexPolyhedronRepresentation() {
         Math::Vec3(-sx, sy, sz)
     };
 
-    std::vector<std::vector<int>> faces = {
+    std::vector<std::vector<int>>* faces = new std::vector<std::vector<int>>{
         {3, 2, 1, 0},
         {4, 5, 6, 7},
         {5, 4, 0, 1},
@@ -38,13 +32,13 @@ void Box::updateConvexPolyhedronRepresentation() {
         {1, 2, 6, 5}
     };
 
-    std::vector<Math::Vec3> uniqueAxes = {
+    std::vector<Math::Vec3>* uniqueAxes = new std::vector<Math::Vec3>{
         Math::Vec3(0, 0, 1),
         Math::Vec3(0, 1, 0),
         Math::Vec3(1, 0, 0)
     };
 
-    this->convexPolyhedronRepresentation = new ConvexPolyhedron(&vertices, &faces, &uniqueAxes);
+    this->convexPolyhedronRepresentation = new ConvexPolyhedron(vertices, faces, uniqueAxes);
     this->convexPolyhedronRepresentation->material = this->material;
 }
 

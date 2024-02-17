@@ -27,6 +27,8 @@ public:
      */
     ConvexPolyhedron* convexPolyhedronRepresentation = nullptr;
 
+    Box(): Box(new Math::Vec3(1, 1, 1)) {};
+
     /**
      * A 3d box shape.
      * @class Box
@@ -35,7 +37,11 @@ public:
      * @author schteppe
      * @extends Shape
      */
-    Box(Math::Vec3* halfExtents);
+    Box(Math::Vec3* halfExtents) : Shape(ShapeTypes::BOX) {
+        this->halfExtents = halfExtents;
+        this->updateConvexPolyhedronRepresentation();
+        this->updateBoundingSphereRadius();
+    }
 
     ~Box();
 

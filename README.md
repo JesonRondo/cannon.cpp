@@ -7,7 +7,7 @@
  - [ ] AABB
  - [ ] ArrayCollisionMatrix
  - [ ] Body
- - [ ] Box
+ - [x] Box
  - [ ] Broadphase
  - [ ] Constraint
  - [ ] ContactEquation

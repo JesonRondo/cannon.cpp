@@ -77,14 +77,14 @@ void ConvexPolyhedron::project(
     result->at(1) = min;
 }
 
-ConvexPolyhedron::ConvexPolyhedron() : Shape(ShapeTypes::CONVEXPOLYHEDRON) {
-    ConvexPolyhedron({}, {});
+ConvexPolyhedron::ConvexPolyhedron() : ConvexPolyhedron(
+    new std::vector<Math::Vec3>(),
+    new std::vector<std::vector<int>>()) {
 }
 
 ConvexPolyhedron::ConvexPolyhedron(
     std::vector<Math::Vec3>* vertices,
-    std::vector<std::vector<int>>* faces) : Shape(ShapeTypes::CONVEXPOLYHEDRON) {
-    ConvexPolyhedron(vertices, faces, nullptr);
+    std::vector<std::vector<int>>* faces) : ConvexPolyhedron(vertices, faces, nullptr) {
 }
 
 ConvexPolyhedron::ConvexPolyhedron(
@@ -96,12 +96,10 @@ ConvexPolyhedron::ConvexPolyhedron(
 
     this->computeNormals();
 
-    if (uniqueAxes != nullptr) {
-        this->uniqueAxes = uniqueAxes;
-    }
+    this->uniqueAxes = uniqueAxes;
 
     this->computeEdges();
-    this->updateBoundingSphereRadius(); 
+    this->updateBoundingSphereRadius();
 }
 
 ConvexPolyhedron::~ConvexPolyhedron() {
@@ -707,12 +705,12 @@ void ConvexPolyhedron::calculateWorldAABB(
     Math::Vec3* max) {
     int n = this->vertices->size();
     std::vector<Math::Vec3>* verts = this->vertices;
-    float minx = -MAX_FLOAT;
-    float miny = -MAX_FLOAT;
-    float minz = -MAX_FLOAT;
-    float maxx = MAX_FLOAT;
-    float maxy = MAX_FLOAT;
-    float maxz = MAX_FLOAT;
+    float minx = MAX_FLOAT;
+    float miny = MAX_FLOAT;
+    float minz = MAX_FLOAT;
+    float maxx = -MAX_FLOAT;
+    float maxy = -MAX_FLOAT;
+    float maxz = -MAX_FLOAT;
 
     for (int i = 0; i < n; i++) {
         tempWorldVertex.copy(&verts->at(i));
